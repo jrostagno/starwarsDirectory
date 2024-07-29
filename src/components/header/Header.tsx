@@ -6,7 +6,7 @@ interface Props {
   className?: string;
 }
 
-export const HEADER_HEIGHT = 40;
+export const HEADER_HEIGHT = 72;
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   justifyContent: "space-between",

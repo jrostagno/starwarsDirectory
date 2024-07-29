@@ -2,9 +2,14 @@ import { Box } from "@mui/material";
 import { ReactNode } from "react";
 import styled from "@mui/material/styles/styled";
 import Header from "../components/header/Header";
+import SideBarNavigation, {
+  SIDEBAR_WIDTH,
+} from "../components/sidebar/SideBarNavigation";
 
 interface Props {
+  className?: string;
   children: ReactNode;
+  contentRef?: React.RefObject<HTMLDivElement>;
 }
 
 const mainLayoutContainerClasses = {
@@ -17,33 +22,41 @@ const MainLayoutContainerRoot = styled(Box, {
   slot: "Root",
 })(() => {
   return {
-    width: "100%",
+    width: "100vw",
     padding: 0,
   };
 });
 
-export const SIDEBAR_WIDTH = 96;
 export const SIDEBAR_MOBILE_WIDTH = 64;
 export const HEADER_HEIGHT = 72;
 
 const Content = styled(Box)(() => ({
   marginLeft: `${SIDEBAR_WIDTH}px`,
   marginTop: `${HEADER_HEIGHT}px`,
-  width: `calc(100vw)`,
+  width: `calc(100vw - ${SIDEBAR_WIDTH}px)`,
   height: `calc(100vh - ${HEADER_HEIGHT}px)`,
   overflowY: "auto",
+
   // [theme.breakpoints.down("md")]: {
   //   marginLeft: `${SIDEBAR_MOBILE_WIDTH}px`,
   //   width: `calc(100vw - ${SIDEBAR_MOBILE_WIDTH}px)`,
   // },
 }));
 
-const MainLayout = ({ children }: Props) => {
+const MainLayout = ({ children, className, contentRef }: Props) => {
   return (
     <MainLayoutContainerRoot>
       <Header />
-      <Content>{children}</Content>
-      {/* <Footer /> */}
+      <SideBarNavigation />
+      <Content
+        ref={contentRef}
+        component="main"
+        className={className || ""}
+        role="main"
+        aria-label="Main Content"
+      >
+        {children}
+      </Content>
     </MainLayoutContainerRoot>
   );
 };
