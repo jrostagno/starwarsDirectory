@@ -1,6 +1,6 @@
 import "./App.css";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { BrowserRouter } from "react-router-dom";
 
 import { projectRoutes } from "./routes";
@@ -22,7 +22,7 @@ const StarWarsApp = () => {
             {projectRoutes.map((page, index) => (
               <Route key={index} path={page.path} element={page.component} />
             ))}
-            {/* <Route path={'*'} element={<Navigate to="/" />} /> */}
+            <Route path={"*"} element={<Navigate to="/" />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

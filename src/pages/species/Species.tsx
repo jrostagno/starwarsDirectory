@@ -22,7 +22,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const Home = () => {
+const Species = () => {
   //  const theme = useTheme();
   const [data, setData] = useState();
   const [searchInput, setSearchInput] = useState<string>("");
@@ -50,7 +50,7 @@ const Home = () => {
         <InnerContent>
           <Stack sx={{ width: "100%", paddingTop: 10 }}>
             <Typography fontSize={70} textAlign={"start"}>
-              STAR WARS PEOPLE
+              STAR WARS SPECIES
             </Typography>
 
             <InputField
@@ -77,4 +77,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Species;

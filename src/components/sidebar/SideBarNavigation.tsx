@@ -1,6 +1,7 @@
 import styled from "@mui/material/styles/styled";
 import { Stack } from "@mui/material";
 import SidebarButton from "./SideBarButton";
+import { useNavigate } from "react-router-dom";
 
 export const SIDEBAR_WIDTH = 200;
 export const SIDEBAR_MOBILE_WIDTH = 64;
@@ -33,24 +34,25 @@ interface SidebarProps {
 }
 
 const SideBarNavigation = ({ className = "" }: SidebarProps) => {
+  const navigate = useNavigate();
   const getSidebarButtonList = () => {
     return [
       {
         // icon: <DataUsageRoundedIcon />,
         label: "People",
-        path: "/People",
+        path: "/people",
         disabled: location.pathname.startsWith("/step"),
       },
       {
         //icon: <BusinessRoundedIcon />,
         label: "Planets",
-        path: "/Planets",
+        path: "/planets",
         disabled: location.pathname.startsWith("/step"),
       },
       {
         // icon: <SupervisedUserCircleRoundedIcon />,
         label: "Species:",
-        path: "/Species:",
+        path: "/species:",
         disabled: location.pathname.startsWith("/step"),
       },
     ];
@@ -65,8 +67,7 @@ const SideBarNavigation = ({ className = "" }: SidebarProps) => {
             tooltipLabel={sidebarButton.label}
             active
             disabled={sidebarButton.disabled}
-
-            //  onClick={() => navigate(sidebarButton.path)}
+            onClick={() => navigate(sidebarButton.path)}
           >
             {sidebarButton.label}
           </SidebarButton>
