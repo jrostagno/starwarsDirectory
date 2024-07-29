@@ -1,20 +1,31 @@
-import {
-  Box,
-  InputAdornment,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { Box, Stack, Typography } from "@mui/material";
+import Masonry from "@mui/lab/Masonry";
 import MainLayout from "../../layouts/MainLayout";
+import { styled } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
+
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useEffect, useState } from "react";
 import { starWarApi } from "../../config/api/starWarsAPI";
 import InnerContent from "../../components/content/GeneralContent";
 import GeneralContent from "../../components/content/GeneralContent";
+import InputField from "../../components/SearchInput";
+
+const heights = [
+  150, 30, 90, 70, 110, 150, 130, 80, 50, 90, 100, 150, 30, 50, 80,
+];
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(0.5),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
 const Home = () => {
+  //  const theme = useTheme();
   const [data, setData] = useState();
-
+  const [searchInput, setSearchInput] = useState<string>("");
   useEffect(() => {
     const getResponse = async () => {
       const response = await starWarApi.get("/people/?search='Luke Skywalker");
@@ -24,71 +35,40 @@ const Home = () => {
 
     getResponse();
   }, []);
-  const test = [
-    { name: "kskks" },
-    { name: "kskks" },
-    { name: "kskks" },
-    { name: "kskks" },
-    { name: "kskks" },
-    { name: "kskks" },
-    { name: "kskks" },
-  ];
 
   console.log(data);
+
+  const handleInputChange = (search: string) => {
+    setSearchInput(search);
+  };
+
+  console.log(searchInput);
 
   return (
     <MainLayout>
       <GeneralContent>
         <InnerContent>
-          <Stack sx={{ width: "100%" }}>
-            <Typography fontSize={40}>
-              STAR WARS PERSONALITIES fosinfosijfosjfosij
+          <Stack sx={{ width: "100%", paddingTop: 10 }}>
+            <Typography fontSize={70} textAlign={"start"}>
+              STAR WARS PERSONALITIES
             </Typography>
 
-            <TextField
-              variant="standard"
-              sx={{ width: 300, alignItems: "flex-start" }}
+            <InputField
+              value={searchInput}
+              onChange={(e) => handleInputChange(e.target.value)}
               InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
+                startAdornment: <SearchRoundedIcon fontSize="small" />,
               }}
-              value={""}
-              onChange={(event) => {
-                //   const cleanValue = removeExtraSpaces(event.target.value.toString()) as string;
-                //   setQuery(cleanValue);
-              }}
-              placeholder="Search"
-              size="small"
             />
 
-            <Box
-              sx={{
-                overflowY: "scroll",
-                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                marginTop: "20px",
-                display: "grid",
-                gridColumnGap: "16px",
-                gridRowGap: "8px",
-                height: "100%",
-                width: "100%",
-                border: "1px solid red",
-              }}
-            >
-              {test.map((t) => (
-                <Box
-                  sx={{
-                    background: "red",
-                    height: 100,
-                    width: 100,
-                    marginTop: 2,
-                  }}
-                >
-                  <Typography>{t.name}</Typography>
-                </Box>
-              ))}
+            <Box sx={{ width: 500, minHeight: 393 }}>
+              <Masonry columns={4} spacing={2}>
+                {heights.map((height, index) => (
+                  <Item key={index} sx={{ height }}>
+                    {index + 1}
+                  </Item>
+                ))}
+              </Masonry>
             </Box>
           </Stack>
         </InnerContent>

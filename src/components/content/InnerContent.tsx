@@ -4,7 +4,7 @@ import Box, { BoxProps } from "@mui/material/Box";
 import { SxProps, Theme, styled } from "@mui/material/styles";
 import { HEADER_HEIGHT } from "../header/Header";
 
-export const SIDENAV_WIDTH = 0;
+export const SIDENAV_WIDTH = 200;
 export const SIDENAV_MOBILE_WIDTH = 0;
 
 const InnerContentWrapper = styled(Box)(({ theme }) => ({

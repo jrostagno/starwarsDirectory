@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import { SxProps } from "@mui/material/styles";
 import styled from "@mui/material/styles/styled";
 import Box from "@mui/material/Box";
+import { SIDEBAR_WIDTH } from "../sidebar/SideBarNavigation";
 
 const Wrapper = styled(Box)(() => ({
   position: "relative",
@@ -9,7 +10,7 @@ const Wrapper = styled(Box)(() => ({
   justifyContent: "center",
   alignItems: "start",
   height: "100%",
-  width: "100%",
+  width: `calc(100% - ${SIDEBAR_WIDTH}px)`,
   minHeight: 800,
 }));
 

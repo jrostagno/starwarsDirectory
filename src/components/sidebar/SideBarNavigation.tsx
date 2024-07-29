@@ -1,6 +1,6 @@
 import styled from "@mui/material/styles/styled";
-import { HEADER_HEIGHT } from "../../layouts/MainLayout";
-import { Button, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
+import SidebarButton from "./SideBarButton";
 
 export const SIDEBAR_WIDTH = 200;
 export const SIDEBAR_MOBILE_WIDTH = 64;
@@ -33,12 +33,44 @@ interface SidebarProps {
 }
 
 const SideBarNavigation = ({ className = "" }: SidebarProps) => {
+  const getSidebarButtonList = () => {
+    return [
+      {
+        // icon: <DataUsageRoundedIcon />,
+        label: "People",
+        path: "/People",
+        disabled: location.pathname.startsWith("/step"),
+      },
+      {
+        //icon: <BusinessRoundedIcon />,
+        label: "Planets",
+        path: "/Planets",
+        disabled: location.pathname.startsWith("/step"),
+      },
+      {
+        // icon: <SupervisedUserCircleRoundedIcon />,
+        label: "Species:",
+        path: "/Species:",
+        disabled: location.pathname.startsWith("/step"),
+      },
+    ];
+  };
   return (
     <SidebarWrapper className={className || ""} aria-label="Sidebar Navigation">
-      <Stack gap={4}>
-        <Button>Poeple</Button>
-        <Button>Panets</Button>
-        <Button>Species</Button>
+      <Stack gap={1}>
+        {getSidebarButtonList().map((sidebarButton, index) => (
+          <SidebarButton
+            key={index}
+            aria-label={sidebarButton.label}
+            tooltipLabel={sidebarButton.label}
+            active
+            disabled={sidebarButton.disabled}
+
+            //  onClick={() => navigate(sidebarButton.path)}
+          >
+            {sidebarButton.label}
+          </SidebarButton>
+        ))}
       </Stack>
     </SidebarWrapper>
   );

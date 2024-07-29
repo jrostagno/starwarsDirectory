@@ -17,7 +17,7 @@ const buttonPaddingSmall = "8px 12px";
 
 // Inputs
 type InputTypes = "standard" | "filled" | "outlined";
-export const inputVariant: InputTypes = "outlined";
+export const inputVariant: InputTypes = "standard";
 
 export type InputSizeTypes = "small" | "medium" | undefined;
 export const inputSize: InputSizeTypes = "medium";
@@ -229,9 +229,6 @@ export const getPaletteMode = (mode: PaletteMode): Partial<ThemeOptions> => ({
           },
           customBackground: {
             main: lightModePalette[0].contrastBackground,
-          },
-          hubspot: {
-            main: hubspotColor,
           },
           originalBackground: {
             default: lightModePalette[0].background,
@@ -454,82 +451,82 @@ export const CustomThemeOptions = (
         },
       },
     },
-    MuiFormControl: {
-      styleOverrides: {
-        root: {
-          color:
-            mode === "dark"
-              ? darkModePalette[0].primaryText
-              : lightModePalette[0].primaryText,
-          background: "transparent",
-          borderRadius: borderRadius,
-          transition: "border 250ms ease-in",
-          "& :-webkit-autofill": {
-            animation: "none !important",
-            WebkitBoxShadow: `0 0 0 1000px ${
-              mode === "dark"
-                ? darkModePalette[0].background
-                : lightModePalette[0].background
-            } inset !important`,
-            WebkitTextFillColor:
-              mode === "dark"
-                ? darkModePalette[0].primaryText
-                : lightModePalette[0].primaryText,
-          },
-        },
-      },
-    },
-    MuiOutlinedInput: {
-      styleOverrides: {
-        root: {
-          color:
-            mode === "dark"
-              ? darkModePalette[0].primaryText
-              : lightModePalette[0].primaryText,
-          background:
-            mode === "dark"
-              ? darkModePalette[0].background
-              : lightModePalette[0].background,
-          borderRadius: borderRadius,
-          transition: "border 250ms ease-in",
-          "& :-webkit-autofill": {
-            animation: "none !important",
-            WebkitBoxShadow: `0 0 0 1000px ${
-              mode === "dark"
-                ? darkModePalette[0].background
-                : lightModePalette[0].background
-            } inset !important`,
-            WebkitTextFillColor:
-              mode === "dark"
-                ? darkModePalette[0].primaryText
-                : lightModePalette[0].primaryText,
-          },
-        },
-        notchedOutline: {
-          borderRadius: borderRadius,
-          borderWidth: "2px",
-          transition: "border 250ms ease-in",
-        },
-      },
-    },
-    MuiFormHelperText: {
-      styleOverrides: {
-        root: {
-          background: "transparent",
-        },
-      },
-    },
-    MuiFormLabel: {
-      styleOverrides: {
-        root: {
-          color: textPrimary,
-          fontWeight: 500,
-          ".MuiFormLabel-asterisk, .MuiInputLabel-asterisk": {
-            color: `${error} !important`,
-          },
-        },
-      },
-    },
+    // MuiFormControl: {
+    //   styleOverrides: {
+    //     root: {
+    //       color:
+    //         mode === "dark"
+    //           ? darkModePalette[0].primaryText
+    //           : lightModePalette[0].primaryText,
+    //       background: "transparent",
+    //       borderRadius: borderRadius,
+    //       transition: "border 250ms ease-in",
+    //       "& :-webkit-autofill": {
+    //         animation: "none !important",
+    //         WebkitBoxShadow: `0 0 0 1000px ${
+    //           mode === "dark"
+    //             ? darkModePalette[0].background
+    //             : lightModePalette[0].background
+    //         } inset !important`,
+    //         WebkitTextFillColor:
+    //           mode === "dark"
+    //             ? darkModePalette[0].primaryText
+    //             : lightModePalette[0].primaryText,
+    //       },
+    //     },
+    //   },
+    // },
+    // MuiOutlinedInput: {
+    //   styleOverrides: {
+    //     root: {
+    //       color:
+    //         mode === "dark"
+    //           ? darkModePalette[0].primaryText
+    //           : lightModePalette[0].primaryText,
+    //       background:
+    //         mode === "dark"
+    //           ? darkModePalette[0].background
+    //           : lightModePalette[0].background,
+    //       borderRadius: borderRadius,
+    //       transition: "border 250ms ease-in",
+    //       "& :-webkit-autofill": {
+    //         animation: "none !important",
+    //         WebkitBoxShadow: `0 0 0 1000px ${
+    //           mode === "dark"
+    //             ? darkModePalette[0].background
+    //             : lightModePalette[0].background
+    //         } inset !important`,
+    //         WebkitTextFillColor:
+    //           mode === "dark"
+    //             ? darkModePalette[0].primaryText
+    //             : lightModePalette[0].primaryText,
+    //       },
+    //     },
+    //     notchedOutline: {
+    //       borderRadius: borderRadius,
+    //       borderWidth: "2px",
+    //       transition: "border 250ms ease-in",
+    //     },
+    //   },
+    // },
+    // MuiFormHelperText: {
+    //   styleOverrides: {
+    //     root: {
+    //       background: "transparent",
+    //     },
+    //   },
+    // },
+    // MuiFormLabel: {
+    //   styleOverrides: {
+    //     root: {
+    //       color: textPrimary,
+    //       fontWeight: 500,
+    //       ".MuiFormLabel-asterisk, .MuiInputLabel-asterisk": {
+    //         color: `${error} !important`,
+    //       },
+    //     },
+    //   },
+    // },
     MuiCheckbox: {
       styleOverrides: {
         root: {
@@ -568,35 +565,35 @@ export const CustomThemeOptions = (
         },
       },
     },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          color:
-            mode === "dark"
-              ? darkModePalette[0].primaryText
-              : lightModePalette[0].primaryText,
-          borderRadius: borderRadius,
-          outline: "none",
-          background: "transparent",
-          "& label": {
-            color:
-              mode === "dark"
-                ? darkModePalette[0].primaryText
-                : lightModePalette[0].primaryText,
-          },
-        },
-      },
-    },
-    MuiSelect: {
-      styleOverrides: {
-        outlined: {
-          "&:focus-visible": {
-            borderRadius: borderRadius,
-            outline: `2px solid ${secondaryMain}`,
-          },
-        },
-      },
-    },
+    // MuiTextField: {
+    //   styleOverrides: {
+    //     root: {
+    //       color:
+    //         mode === "dark"
+    //           ? darkModePalette[0].primaryText
+    //           : lightModePalette[0].primaryText,
+    //       borderRadius: borderRadius,
+    //       outline: "none",
+    //       background: "transparent",
+    //       "& label": {
+    //         color:
+    //           mode === "dark"
+    //             ? darkModePalette[0].primaryText
+    //             : lightModePalette[0].primaryText,
+    //       },
+    //     },
+    //   },
+    // },
+    // MuiSelect: {
+    //   styleOverrides: {
+    //     outlined: {
+    //       "&:focus-visible": {
+    //         borderRadius: borderRadius,
+    //         outline: `2px solid ${secondaryMain}`,
+    //       },
+    //     },
+    //   },
+    // },
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
