@@ -13,7 +13,7 @@ import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import InnerContent from "../../components/content/GeneralContent";
 import GeneralContent from "../../components/content/GeneralContent";
@@ -36,6 +36,7 @@ const Species = () => {
 
   const [searchInput, setSearchInput] = useState<string>("");
   const [localSearch, setLocalSearch] = useState<string>("");
+  const [isFilterByName, setIsFilterByName] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const smallDevices = useMediaQuery(theme.breakpoints.down(1300));
 
@@ -53,8 +54,15 @@ const Species = () => {
   };
 
   const handleInputChange = (search: string) => {
+    setIsFilterByName(true);
     setSearchInput(search);
   };
+
+  useEffect(() => {
+    if (searchInput === "") {
+      setIsFilterByName(false);
+    }
+  }, [searchInput]);
 
   const onNextPage = () => {
     if (!data) return;
@@ -103,9 +111,8 @@ const Species = () => {
                 sx={{
                   justifyContent: "space-between",
                   alignItems: "center",
-                  display: "flex",
+                  display: isFilterByName ? "none" : "flex",
                   marginTop: 5,
-                  // display: isFilterByName ? "none" : "flex",
                 }}
               >
                 <ButtonPagination

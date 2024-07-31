@@ -62,10 +62,10 @@ const Home = () => {
   });
 
   useEffect(() => {
-    if (debounceValue === "") {
+    if (searchInput === "") {
       setIsFilterByName(false);
     }
-  }, [debounceValue]);
+  }, [searchInput]);
 
   const onNextPage = () => {
     if (!data) return;
