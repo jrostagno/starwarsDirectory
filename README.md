@@ -1,6 +1,6 @@
 # Star Wars Directory Challenge
 
-This project was created with React / Vaite , Redux, and Material UI CSS for styling.
+This project was created with React / Vite, tankStack query and Material UI CSS for styling.
 
 ## Instructions 🚀
 
