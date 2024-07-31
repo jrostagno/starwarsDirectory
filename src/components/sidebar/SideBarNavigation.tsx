@@ -38,22 +38,17 @@ const SideBarNavigation = ({ className = "" }: SidebarProps) => {
   const getSidebarButtonList = () => {
     return [
       {
-        // icon: <DataUsageRoundedIcon />,
         label: "People",
         path: "/people",
-        disabled: location.pathname.startsWith("/step"),
       },
       {
-        //icon: <BusinessRoundedIcon />,
         label: "Planets",
         path: "/planets",
         disabled: location.pathname.startsWith("/step"),
       },
       {
-        // icon: <SupervisedUserCircleRoundedIcon />,
-        label: "Species:",
-        path: "/species:",
-        disabled: location.pathname.startsWith("/step"),
+        label: "Species",
+        path: "/species",
       },
     ];
   };
@@ -67,7 +62,9 @@ const SideBarNavigation = ({ className = "" }: SidebarProps) => {
             tooltipLabel={sidebarButton.label}
             active
             disabled={sidebarButton.disabled}
-            onClick={() => navigate(sidebarButton.path)}
+            onClick={() => {
+              navigate(sidebarButton.path);
+            }}
           >
             {sidebarButton.label}
           </SidebarButton>

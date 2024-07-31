@@ -1,6 +1,7 @@
 import "./App.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 
 import { projectRoutes } from "./routes";
@@ -13,18 +14,22 @@ const StarWarsApp = () => {
     ...getPaletteMode("light"),
   });
 
+  const queryClient = new QueryClient();
+
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <BrowserRouter>
-          <Routes>
-            {projectRoutes.map((page, index) => (
-              <Route key={index} path={page.path} element={page.component} />
-            ))}
-            <Route path={"*"} element={<Navigate to="/" />} />
-          </Routes>
-        </BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Routes>
+              {projectRoutes.map((page, index) => (
+                <Route key={index} path={page.path} element={page.component} />
+              ))}
+              <Route path={"*"} element={<Navigate to="/" />} />
+            </Routes>
+          </BrowserRouter>
+        </QueryClientProvider>
       </ThemeProvider>
     </>
   );

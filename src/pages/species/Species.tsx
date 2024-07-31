@@ -1,19 +1,27 @@
-import { Box, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Stack,
+  TextField,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Masonry from "@mui/lab/Masonry";
 import MainLayout from "../../layouts/MainLayout";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import { useEffect, useState } from "react";
-import { starWarApi } from "../../config/api/starWarsAPI";
+import { useState } from "react";
+
 import InnerContent from "../../components/content/GeneralContent";
 import GeneralContent from "../../components/content/GeneralContent";
-import InputField from "../../components/SearchInput";
+import { useQuery } from "@tanstack/react-query";
+import EmptyState from "../../components/states/EmptyState";
+import { getAllStarWarSpecies } from "../../actions/search-species";
+import ButtonPagination from "../../components/pagination/Pagination";
 
-const heights = [
-  150, 30, 90, 70, 110, 150, 130, 80, 50, 90, 100, 150, 30, 50, 80,
-];
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -23,52 +31,133 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Species = () => {
-  //  const theme = useTheme();
-  const [data, setData] = useState();
+  const theme = useTheme();
+
   const [searchInput, setSearchInput] = useState<string>("");
-  useEffect(() => {
-    const getResponse = async () => {
-      const response = await starWarApi.get("/people/?search='Luke Skywalker");
+  const [localSearch, setLocalSearch] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const smallDevices = useMediaQuery(theme.breakpoints.down(1300));
 
-      setData(response.data);
-    };
+  const { data, isLoading } = useQuery({
+    queryKey: ["species", { page, searchInput }],
+    queryFn: () => getAllStarWarSpecies(page, searchInput),
+    staleTime: 60 * 1000 * 1000,
+    // keepPreviousData: true,
+  });
 
-    getResponse();
-  }, []);
-
-  console.log(data);
+  const handleLocalSearche = (search: string) => {
+    setLocalSearch(search);
+  };
 
   const handleInputChange = (search: string) => {
     setSearchInput(search);
   };
 
-  console.log(searchInput);
+  const onNextPage = () => {
+    if (!data) return;
+    if (data?.length === 0) return;
+    if (data?.length < 10) return;
+    setPage(page + 1);
+  };
+
+  const onPrevPage = () => {
+    if (page === 1) {
+      return;
+    }
+    setPage((prevPage) => prevPage - 1);
+  };
 
   return (
     <MainLayout>
       <GeneralContent>
         <InnerContent>
-          <Stack sx={{ width: "100%", paddingTop: 10 }}>
-            <Typography fontSize={70} textAlign={"start"}>
+          <Stack sx={{ width: "100%", paddingTop: 2 }}>
+            <Typography fontSize={smallDevices ? 45 : 70} textAlign={"start"}>
               STAR WARS SPECIES
             </Typography>
 
-            <InputField
+            <TextField
+              variant="standard"
               value={searchInput}
               onChange={(e) => handleInputChange(e.target.value)}
               InputProps={{
-                startAdornment: <SearchRoundedIcon fontSize="small" />,
+                startAdornment: <SearchRoundedIcon fontSize="medium" />,
               }}
+              sx={{
+                input: {
+                  color: "black",
+                  fontSize: smallDevices ? "0.8rem" : "1.3rem",
+                  height: smallDevices ? "30px" : "50px",
+                },
+                height: smallDevices ? "30px" : "50px",
+              }}
+              placeholder="Search species..."
+              size="medium"
             />
 
-            <Box sx={{ width: 500, minHeight: 393 }}>
-              <Masonry columns={4} spacing={2}>
-                {heights.map((height, index) => (
-                  <Item key={index} sx={{ height }}>
-                    {index + 1}
-                  </Item>
-                ))}
-              </Masonry>
+            <Box sx={{ width: "auto", minHeight: 393, marginTop: 7 }}>
+              <Box
+                sx={{
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  display: "flex",
+                  marginTop: 5,
+                  // display: isFilterByName ? "none" : "flex",
+                }}
+              >
+                <ButtonPagination
+                  page={page}
+                  onPrevPage={onPrevPage}
+                  onNextPage={onNextPage}
+                />
+                <TextField
+                  value={localSearch}
+                  onChange={(e) => handleLocalSearche(e.target.value)}
+                  variant="standard"
+                  sx={{ input: { color: "black" } }}
+                  placeholder="Filter local"
+                  size="small"
+                />
+              </Box>
+              {isLoading ? (
+                <CircularProgress size={50} />
+              ) : data && data.length > 0 ? (
+                <Masonry columns={smallDevices ? 4 : 7} spacing={2}>
+                  {data
+                    .filter((el) =>
+                      el.name
+                        ?.toLocaleLowerCase()
+                        .includes(localSearch.toLocaleLowerCase())
+                    )
+                    .map((data, index) => (
+                      <Item
+                        key={index}
+                        sx={{
+                          height: Number(data.average_height) - 10,
+                          minHeight: "130px",
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            fontWeight: 700,
+                            marginBottom: 2,
+                            color: "#0A192F",
+                          }}
+                        >
+                          {data.name}
+                        </Typography>
+                        <Typography sx={{ marginBottom: 2 }}>
+                          {data.language === "unknown" ? "" : data.language}
+                        </Typography>
+                      </Item>
+                    ))}
+                </Masonry>
+              ) : (
+                <EmptyState
+                  title={"No Species available"}
+                  subtitle={"Please try again"}
+                />
+              )}
             </Box>
           </Stack>
         </InnerContent>
