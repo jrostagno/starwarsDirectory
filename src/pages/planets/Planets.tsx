@@ -102,7 +102,6 @@ const Planets = () => {
                   alignItems: "center",
                   display: "flex",
                   marginTop: 5,
-                  // display: isFilterByName ? "none" : "flex",
                 }}
               >
                 <ButtonPagination

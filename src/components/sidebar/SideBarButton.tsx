@@ -82,7 +82,6 @@ const SidebarButton: FunctionComponent<SidebarButtonProps> = ({
   onClick,
 }) => {
   const handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    // This is to allow the user to press the spacebar or enter key to click the button.
     if (event.key === "Enter" || event.key === " ") {
       if (!disabled && onClick) {
         onClick();
@@ -90,10 +89,8 @@ const SidebarButton: FunctionComponent<SidebarButtonProps> = ({
     }
   };
 
-  // Determine ARIA role based on button state.
   const ariaRole = active ? "button" : "presentation";
 
-  // Use useReducedMotion to conditionally apply motion animations
   const shouldReduceMotion = useReducedMotion();
 
   return (

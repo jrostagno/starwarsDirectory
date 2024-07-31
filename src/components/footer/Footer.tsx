@@ -4,7 +4,6 @@ const Footer = () => {
   return (
     <Box
       role="banner"
-      //  className={className || ""}
       sx={{
         width: "100%",
         height: 100,

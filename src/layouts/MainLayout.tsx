@@ -36,11 +36,6 @@ const Content = styled(Box)(() => ({
   width: `calc(100vw - ${SIDEBAR_WIDTH}px)`,
   height: `calc(100vh - ${HEADER_HEIGHT}px)`,
   overflowY: "auto",
-
-  // [theme.breakpoints.down("md")]: {
-  //   marginLeft: `${SIDEBAR_MOBILE_WIDTH}px`,
-  //   width: `calc(100vw - ${SIDEBAR_MOBILE_WIDTH}px)`,
-  // },
 }));
 
 const MainLayout = ({ children, className, contentRef }: Props) => {

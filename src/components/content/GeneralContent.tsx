@@ -25,13 +25,10 @@ const GeneralContent: FunctionComponent<ContentProps> = ({
   children,
 }) => {
   return (
-    // Adding a role and ARIA label to the Wrapper component
     <Wrapper
       component="article"
       className={className || ""}
-      //  sx={{ ...sx }}
-      role="main" // Role indicating this is the main content area
-      aria-label="Main Content" // ARIA label for the main content area
+      aria-label="Main Content"
     >
       {children}
     </Wrapper>

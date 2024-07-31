@@ -9,7 +9,6 @@ export const SIDENAV_MOBILE_WIDTH = 0;
 
 const InnerContentWrapper = styled(Box)(({ theme }) => ({
   width: `calc(100% - ${SIDENAV_WIDTH}px)`,
-  // marginLeft: SIDENAV_WIDTH,
   height: `calc(100vh - ${HEADER_HEIGHT}px)`,
   overflowY: "scroll",
   padding: theme.spacing(3),
@@ -37,7 +36,6 @@ const InnerContent: FunctionComponent<InnerContentProps> = ({
   ...props
 }) => {
   return (
-    // Adding a role and ARIA label to the InnerContentWrapper component
     <InnerContentWrapper
       className={className || ""}
       component="section"
@@ -46,8 +44,8 @@ const InnerContent: FunctionComponent<InnerContentProps> = ({
         overflow: overflowY,
       }}
       {...props}
-      role="main" // Role indicating this is the main content area
-      aria-label="Inner Content" // ARIA label for the inner content area
+      role="main"
+      aria-label="Inner Content"
     >
       {children}
     </InnerContentWrapper>

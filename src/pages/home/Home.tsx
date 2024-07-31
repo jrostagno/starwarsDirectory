@@ -41,7 +41,6 @@ const Home = () => {
 
   const [page, setPage] = useState<number>(1);
 
-  //const debounceValue = useDebounceValue(searchInput);
   const smallDevices = useMediaQuery(theme.breakpoints.down(1300));
   const handleInputChange = (search: string) => {
     setIsFilterByName(true);
