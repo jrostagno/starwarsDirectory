@@ -22,6 +22,7 @@ import { useQuery } from "@tanstack/react-query";
 import EmptyState from "../../components/states/EmptyState";
 import { useTheme } from "@mui/material/styles";
 import ButtonPagination from "../../components/pagination/Pagination";
+import { useDebounceValue } from "../../hooks/useDebounce";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -41,6 +42,8 @@ const Home = () => {
 
   const [page, setPage] = useState<number>(1);
 
+  const debounceValue = useDebounceValue(searchInput);
+
   const smallDevices = useMediaQuery(theme.breakpoints.down(1300));
   const handleInputChange = (search: string) => {
     setIsFilterByName(true);
@@ -52,17 +55,17 @@ const Home = () => {
   };
 
   const { data, isLoading } = useQuery({
-    queryKey: ["people", { page, searchInput }],
-    queryFn: () => getAllStarWarPeople(page, searchInput),
+    queryKey: ["people", { page, debounceValue }],
+    queryFn: () => getAllStarWarPeople(page, debounceValue),
     staleTime: 60 * 1000 * 1000,
     // keepPreviousData: true,
   });
 
   useEffect(() => {
-    if (searchInput === "") {
+    if (debounceValue === "") {
       setIsFilterByName(false);
     }
-  }, [searchInput]);
+  }, [debounceValue]);
 
   const onNextPage = () => {
     if (!data) return;
@@ -135,7 +138,7 @@ const Home = () => {
                 />
               </Box>
               {isLoading ? (
-                <CircularProgress size={50} />
+                <CircularProgress sx={{ marginTop: 15 }} size={40} />
               ) : data && data.length > 0 ? (
                 <Masonry columns={smallDevices ? 4 : 7} spacing={2}>
                   {data

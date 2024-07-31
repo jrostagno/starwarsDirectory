@@ -21,6 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import EmptyState from "../../components/states/EmptyState";
 import { getAllStarWarSpecies } from "../../actions/search-species";
 import ButtonPagination from "../../components/pagination/Pagination";
+import { useDebounceValue } from "../../hooks/useDebounce";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -38,9 +39,11 @@ const Species = () => {
   const [page, setPage] = useState<number>(1);
   const smallDevices = useMediaQuery(theme.breakpoints.down(1300));
 
+  const debounceValue = useDebounceValue(searchInput);
+
   const { data, isLoading } = useQuery({
-    queryKey: ["species", { page, searchInput }],
-    queryFn: () => getAllStarWarSpecies(page, searchInput),
+    queryKey: ["species", { page, debounceValue }],
+    queryFn: () => getAllStarWarSpecies(page, debounceValue),
     staleTime: 60 * 1000 * 1000,
     // keepPreviousData: true,
   });
@@ -120,7 +123,7 @@ const Species = () => {
                 />
               </Box>
               {isLoading ? (
-                <CircularProgress size={50} />
+                <CircularProgress sx={{ marginTop: 15 }} size={40} />
               ) : data && data.length > 0 ? (
                 <Masonry columns={smallDevices ? 4 : 7} spacing={2}>
                   {data
